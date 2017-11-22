@@ -1,3 +1,0 @@
-[submodule "gnr-sid/pybombs"]
-	path = gnr-sid/pybombs
-	url = https://github.com/gnuradio/pybombs.git
