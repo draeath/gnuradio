@@ -18,7 +18,7 @@ RUN groupadd -g $dkgid $dkgroup &&\
 ADD files/pybombs /home/$dkuser/pybombs
 RUN apt-get update &&\
     apt-get install -y apt-utils &&\
-    apt-get install -y reportbug sudo ca-certificates pulseaudio pavucontrol hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf &&\
+    apt-get install -y reportbug sudo ca-certificates pulseaudio pavucontrol hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-setuptools &&\
     apt-mark auto ca-certificates &&\
     apt-get clean
 
