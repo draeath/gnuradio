@@ -10,7 +10,7 @@ ARG dkgid=1000
 
 COPY files/sources.list /etc/apt/sources.list
 COPY files/local.conf /etc/fonts/local.conf
-RUN groupadd -g $dkgid $dkgroup && useradd  -m -N -g $dkgid -u $dkuid $dkuser &&\
+RUN groupadd -g $dkgid $dkgroup && useradd  -m -N -G dialout,audio,plugdev -g $dkgid -u $dkuid $dkuser &&\
     apt-get update &&\
     apt-get install -y apt-utils &&\
     apt-get install -y ca-certificates gnuradio hackrf soapysdr-module-hackrf pulseaudio &&\
