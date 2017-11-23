@@ -9,3 +9,5 @@ docker run -it --net=host -e DISPLAY \
 -v $XDG_RUNTIME_DIR/pulse:/run/user/1000/pulse \
 gnr-sid
 ```
+
+**CAUTION**: If yopu use `--net=host` (as you must, to allow X11/pulse to work container-to-host) the hostname inside the container will match the host. Be aware of this.
