@@ -14,8 +14,9 @@ RUN groupadd -g $dkgid $dkgroup &&\
     mkdir /etc/sudoers.d &&\
     echo "$dkuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/misc &&\
     chmod 755 /etc/sudoers.d &&\
-    chmod 400 /etc/sudoers.d/misc &&\
-    apt-get update &&\
+    chmod 400 /etc/sudoers.d/misc
+ADD files/pybombs /home/$dkuser/pybombs
+RUN apt-get update &&\
     apt-get install -y apt-utils &&\
     apt-get install -y reportbug sudo ca-certificates pulseaudio pavucontrol &&\
     apt-mark auto ca-certificates &&\
