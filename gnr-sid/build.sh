@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t gnr-sid --build-arg dkuser=draeath --build-arg dkgroup=draeath .
+docker build -t gnr-sid --build-arg dkuser=$(id -un) --build-arg dkgroup=$( id -gn) .

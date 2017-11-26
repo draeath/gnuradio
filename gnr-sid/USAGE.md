@@ -5,8 +5,9 @@
 
 ```
 docker run -it --net=host -e DISPLAY \
---user 1000:1000 \
--v $HOME/.Xauthority:/home/draeath/.Xauthority \
+--user $(id -u):$(id -g) \
+-v $HOME/.Xauthority:/home/$(id -un)/.Xauthority \
+-v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse \
 gnr-sid
 ```
 
