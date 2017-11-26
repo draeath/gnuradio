@@ -17,7 +17,7 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
     apt-get install -y apt-utils &&\
-    apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-dev python-setuptools &&\
+    apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
     apt-mark auto ca-certificates &&\
     apt-get clean
 
