@@ -1,7 +1,5 @@
 FROM buildpack-deps:stretch
 
-ENV DEBIAN_FRONTEND noninteractive
-
 ARG dkuser=gnr
 ARG dkgroup=gnr
 ARG dkuid=1000
@@ -16,8 +14,8 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 755 /etc/sudoers.d &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
-    apt-get install -y apt-utils &&\
-    apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
     apt-mark auto ca-certificates &&\
     apt-get clean
 
