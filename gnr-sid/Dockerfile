@@ -30,4 +30,9 @@ RUN python setup.py install
 
 USER $dkuser
 WORKDIR /home/$dkuser
-CMD ["bash"]
+RUN pybombs auto-config
+RUN pybombs recipes add-defaults
+RUN pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default
+RUN echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc
+
+CMD ["bash", "-i"]
