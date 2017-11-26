@@ -15,7 +15,7 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y reportbug sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools libssl-dev &&\
     apt-mark auto ca-certificates &&\
     apt-get clean
 
@@ -24,7 +24,9 @@ RUN echo "default-server = unix:/run/user/$dkuid/pulse/native" >> /etc/pulse/cli
 
 ADD files/pybombs /root/pybombs
 WORKDIR /root/pybombs
-RUN python setup.py install
+RUN apt-get update &&\
+    python setup.py install &&\
+    apt-get clean
 
 USER $dkuser
 WORKDIR /home/$dkuser
