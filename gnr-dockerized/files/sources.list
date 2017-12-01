@@ -1,11 +1,3 @@
 deb http://us.archive.ubuntu.com/ubuntu/ artful main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ artful main restricted universe multiverse
-
 deb http://us.archive.ubuntu.com/ubuntu/ artful-updates main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ artful-updates main restricted universe multiverse
-
 deb http://us.archive.ubuntu.com/ubuntu/ artful-security main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ artful-security main restricted universe multiverse
-
-deb http://us.archive.ubuntu.com/ubuntu/ artful-backports main restricted universe multiverse
-deb-src http://us.archive.ubuntu.com/ubuntu/ artful-backports main restricted universe multiverse

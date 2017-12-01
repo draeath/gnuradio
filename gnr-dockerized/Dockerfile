@@ -14,26 +14,21 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 755 /etc/sudoers.d &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils &&\
-    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
-    #DEBIAN_FRONTEND=noninteractive apt-get build-dep -y gnuradio &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo ca-certificates python-apt python-pip python-setuptools python-wheel git pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf inspectrum &&\
     apt-get clean
 
 COPY files/client.conf /etc/pulse/client.conf
 RUN echo "default-server = unix:/run/user/$dkuid/pulse/native" >> /etc/pulse/client.conf
 
-ADD files/pybombs /root/pybombs
-WORKDIR /root/pybombs
-RUN apt-get update &&\
-    python setup.py install &&\
-    apt-get clean
+RUN pip install git+https://github.com/gnuradio/pybombs.git
 
 USER $dkuser
 WORKDIR /home/$dkuser
-RUN pybombs auto-config
-RUN pybombs recipes add-defaults
-RUN pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default
-RUN echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc
+RUN pybombs auto-config &&\
+    pybombs recipes add-defaults &&\
+    pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default &&\
+    echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc &&\
+    apt-get clean
 
 CMD ["bash", "-i"]
