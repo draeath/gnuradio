@@ -31,12 +31,13 @@ RUN apt-get update &&\
 USER $dkuser
 WORKDIR /home/$dkuser
 RUN pybombs auto-config &&\
-    pybombs recipes add-defaults
-RUN pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default &&\
-    echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc
-RUN pybombs install gr-osmosdr
-RUN pybombs install gr-correctiq
-RUN pybombs install inspectrum
+    pybombs recipes add-defaults &&\
+    pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default &&\
+    echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc &&\
+    pybombs install gr-osmosdr &&\
+    pybombs install gr-correctiq &&\
+    pybombs install inspectrum &&\
+    sudo ldconfig
 
 # aaaand go! this container is interactive, contrary to the typical container pattern
 CMD ["bash", "-i"]
