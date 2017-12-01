@@ -15,7 +15,7 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo ca-certificates python-apt python-pip python-setuptools python-wheel git pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf inspectrum &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends sudo ca-certificates python-apt python-pip python-setuptools python-wheel git pulseaudio xterm hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf inspectrum &&\
     apt-get clean
 
 COPY files/client.conf /etc/pulse/client.conf
