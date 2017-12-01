@@ -1,5 +1,5 @@
 #!/bin/bash
-docker build -t gnr-sid \
+docker build -t gnr \
   --build-arg dkuser=$(id -un) \
   --build-arg dkuid=$(id -u) \
   --build-arg dkgroup=$(id -gn) \
