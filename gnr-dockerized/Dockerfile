@@ -37,6 +37,7 @@ RUN pybombs auto-config &&\
     pybombs install gr-osmosdr &&\
     pybombs install gr-correctiq &&\
     pybombs install inspectrum &&\
+    find ${HOME}/.gnuradio-default/src -mindepth 2 -maxdepth 2 -type d -name build -exec rm -Rf '{}' + &&\
     sudo ldconfig
 
 # aaaand go! this container is interactive, contrary to the typical container pattern
