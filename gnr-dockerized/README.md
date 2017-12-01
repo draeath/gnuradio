@@ -9,7 +9,7 @@ docker run -it --rm --net=host -e DISPLAY \
 --user "$(id -u):$(id -g)" \
 -v "${HOME}/.Xauthority:/home/$(id -un)/.Xauthority" \
 -v "${XDG_RUNTIME_DIR}/pulse:/run/user/$(id -u)/pulse" \
-gnr
+"$(id -un)/private:gnuradio"
 ```
 
 Please note above the id subshells. If you didn't build the image with the same user/uid/group/gid as you are running the container as, take care that these map up correctly (`-v {HOSTSIDE}:{CONTAINERSIDE}`) and note you should tell docker to run the container as yourself, else the '.Xauthority' and pulse rundir will mount inside the container as root, breaking stuff.

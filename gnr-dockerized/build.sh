@@ -1,5 +1,5 @@
 #!/bin/bash
-docker build -t gnr \
+docker build -t "$(id -un)/private:gnuradio" \
   --build-arg dkuser="$(id -un)" \
   --build-arg dkuid="$(id -u)" \
   --build-arg dkgroup="$(id -gn)" \
