@@ -6,9 +6,9 @@
 Suggested execution:
 ```
 docker run -it --rm --net=host -e DISPLAY \
---user "$(id -u)":"$(id -g)" \
--v "${HOME}"/.Xauthority:/home/"$(id -un)"/.Xauthority \
--v "${XDG_RUNTIME_DIR}"/pulse:/run/user/"$(id -u)"/pulse \
+--user "$(id -u):$(id -g)" \
+-v "${HOME}/.Xauthority:/home/$(id -un)/.Xauthority" \
+-v "${XDG_RUNTIME_DIR}/pulse:/run/user/$(id -u)/pulse" \
 gnr
 ```
 
