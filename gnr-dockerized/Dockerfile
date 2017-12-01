@@ -15,6 +15,7 @@ RUN groupadd -g $dkgid $dkgroup &&\
     chmod 400 /etc/sudoers.d/misc
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils &&\
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y sudo ca-certificates pulseaudio hackrf libhackrf0 libhackrf-dev soapysdr-module-hackrf python-apt python-dev python-setuptools &&\
     #DEBIAN_FRONTEND=noninteractive apt-get build-dep -y gnuradio &&\
     apt-get clean
