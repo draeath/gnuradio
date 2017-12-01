@@ -1,1 +1,2 @@
-Dir::Cache "tmp/aptcache";
+Dir::Cache "";
+Dir::Cache::archives "";
