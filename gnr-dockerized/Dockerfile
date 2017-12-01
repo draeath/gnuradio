@@ -13,7 +13,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu/ artful main restricted universe 
     echo 'Dir::Cache "";' > /etc/apt/apt.conf.d/02nocache &&\
     echo 'Dir::Cache::archives "";' >> /etc/apt/apt.conf.d/02nocache
 RUN groupadd -g $dkgid $dkgroup &&\
-    useradd  -m -N -G dialout,audio,plugdev -g $dkgid -u $dkuid $dkuser &&\
+    useradd -m -N -G dialout,audio,plugdev -g $dkgid -u $dkuid $dkuser &&\
     mkdir /etc/sudoers.d &&\
     echo "$dkuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/misc &&\
     chmod 755 /etc/sudoers.d &&\
