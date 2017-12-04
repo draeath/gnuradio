@@ -29,7 +29,7 @@ RUN echo "set debconf/frontend Noninteractive" | debconf-communicate &&\
 # user environment stuff
 USER $dkuser
 WORKDIR /home/$dkuser
-RUN echo "set debconf/frontend Noninteractive" | debconf-communicate &&\
+RUN echo "set debconf/frontend Noninteractive" | sudo debconf-communicate &&\
     pybombs auto-config &&\
     pybombs recipes add-defaults &&\
     pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default &&\
@@ -38,7 +38,7 @@ RUN echo "set debconf/frontend Noninteractive" | debconf-communicate &&\
     pybombs install gr-correctiq &&\
     pybombs install inspectrum &&\
     find ${HOME}/.gnuradio-default/src -mindepth 2 -maxdepth 2 -type d -name build -exec rm -Rf '{}' + &&\
-    echo "set debconf/frontend Dialog" | debconf-communicate &&\
+    echo "set debconf/frontend Dialog" | sudo debconf-communicate &&\
     sudo rm -rf /var/lib/apt/lists/* &&\
     sudo ldconfig
 
