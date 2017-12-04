@@ -9,9 +9,7 @@ ARG dkgid=1000
 # system setup stuff
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ artful main restricted universe multiverse" > /etc/apt/sources.list &&\
     echo "deb http://archive.ubuntu.com/ubuntu/ artful-updates main restricted universe multiverse" >> /etc/apt/sources.list &&\
-    echo "deb http://archive.ubuntu.com/ubuntu/ artful-security main restricted universe multiverse" >> /etc/apt/sources.list &&\
-    echo 'Dir::Cache "";' > /etc/apt/apt.conf.d/02nocache &&\
-    echo 'Dir::Cache::archives "";' >> /etc/apt/apt.conf.d/02nocache
+    echo "deb http://archive.ubuntu.com/ubuntu/ artful-security main restricted universe multiverse" >> /etc/apt/sources.list
 RUN groupadd -g $dkgid $dkgroup &&\
     useradd -m -N -G dialout,audio,plugdev -g $dkgid -u $dkuid $dkuser &&\
     mkdir /etc/sudoers.d &&\
