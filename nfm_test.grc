@@ -116,7 +116,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>8</value>
+      <value>16</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -248,7 +248,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>8</value>
+      <value>16</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -314,7 +314,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>14</value>
+      <value>0</value>
     </param>
     <param>
       <key>_enabled</key>
