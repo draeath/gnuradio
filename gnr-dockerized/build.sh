@@ -18,6 +18,4 @@ runtime build -t "gnuradio:$DATEVAL" \
   --build-arg dkuid="$(id -u)" \
   --build-arg dkgroup="$(id -gn)" \
   --build-arg dkgid="$(id -g)" \
-  .
-
-runtime tag "gnuradio:$DATEVAL" "gnuradio:latest"
+  . && runtime tag "gnuradio:$DATEVAL" "gnuradio:latest"

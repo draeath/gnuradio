@@ -13,38 +13,40 @@ RUN groupadd -g $dkgid $dkgroup &&\
     echo "$dkuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/misc &&\
     chmod 755 /etc/sudoers.d &&\
     chmod 400 /etc/sudoers.d/misc
-RUN echo "set debconf/frontend noninteractive" | DEBIAN_FRONTEND=noninteractive debconf-communicate &&\
-    apt-get update &&\
-    apt-get dist-upgrade -y &&\
+RUN echo "set debconf/frontend noninteractive" | DEBIAN_FRONTEND=noninteractive debconf-communicate
+RUN apt-get update &&\
     apt-get install -y --no-install-recommends apt-utils &&\
-    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm libxml2 libxml2-dev &&\
-    apt-get install -y --no-install-recommends python-apt python-pip python-setuptools python-wheel python-mako python-requests python-numpy python-six python-lxml &&\
-    apt-get install -y --no-install-recommends python3-apt python3-pip python3-setuptools python3-wheel python3-mako python3-requests python3-numpy python3-six python3-lxml &&\
-    echo "daemon-binary = /bin/true" > /etc/pulse/client.conf &&\
+    apt-get dist-upgrade -y &&\
+    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm fonts-dejavu python3-apt python3-pip python3-wheel python3-setuptools python3-ruamel.yaml virtualenv &&\
+    rm -rf /var/lib/apt/lists/*
+RUN echo "daemon-binary = /bin/true" > /etc/pulse/client.conf &&\
     echo "enable-shm = false" >> /etc/pulse/client.conf &&\
     echo "autospawn = no" >> /etc/pulse/client.conf &&\
-    echo "default-server = unix:/run/user/$dkuid/pulse/native" >> /etc/pulse/client.conf &&\
-    pip3 install git+https://github.com/gnuradio/pybombs.git &&\
-    echo "set debconf/frontend dialog" | DEBIAN_FRONTEND=noninteractive debconf-communicate &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    ldconfig
+    echo "default-server = unix:/run/user/$dkuid/pulse/native" >> /etc/pulse/client.conf
+RUN echo "set debconf/frontend dialog" | DEBIAN_FRONTEND=noninteractive debconf-communicate
 
 # user environment stuff
 USER $dkuser
 WORKDIR /home/$dkuser
-RUN echo "set debconf/frontend noninteractive" | sudo DEBIAN_FRONTEND=noninteractive debconf-communicate &&\
-    sudo apt-get update &&\
-    pybombs auto-config &&\
-    pybombs recipes add-defaults &&\
-    pybombs prefix init ~/.gnuradio-default -a gnuradio-default -R gnuradio-default &&\
-    echo "source ~/.gnuradio-default/setup_env.sh" >> ~/.bashrc &&\
+RUN echo "set debconf/frontend noninteractive" | sudo DEBIAN_FRONTEND=noninteractive debconf-communicate
+RUN sudo pip3 install git+https://github.com/gnuradio/pybombs.git
+RUN pybombs auto-config
+RUN pybombs recipes add-defaults
+RUN sudo apt-get update &&\
+    pybombs recipes update &&\
+    echo "replacing gnuradio.lwr with gnuradio38.lwr - see https://github.com/gnuradio/pybombs/issues/542" &&\
+    cp -afv ~/.pybombs/recipes/gr-recipes/gnuradio38.lwr ~/.pybombs/recipes/gr-recipes/gnuradio.lwr &&\
+    pybombs prefix init ~/.gnuradio -a gnuradio -R gnuradio-default --virtualenv &&\
+    echo "source ~/.gnuradio/setup_env.sh" >> ~/.bashrc &&\
+    sudo rm -rf /var/lib/apt/lists/*
+RUN sudo apt-get update &&\
+    pybombs recipes update &&\
+    pybombs install gnuradio38 &&\
     pybombs install gr-osmosdr &&\
     pybombs install gr-correctiq &&\
     pybombs install inspectrum &&\
-    find ${HOME}/.gnuradio-default/src -mindepth 2 -maxdepth 2 -type d -name build -exec rm -Rf '{}' + &&\
-    echo "set debconf/frontend dialog" | sudo DEBIAN_FRONTEND=noninteractive debconf-communicate &&\
-    sudo rm -rf /var/lib/apt/lists/* &&\
-    sudo ldconfig
+    find ${HOME}/.gnuradio/src -mindepth 2 -maxdepth 2 -type d -name build -exec rm -Rf '{}' + &&\
+    sudo rm -rf /var/lib/apt/lists/*
+RUN echo "set debconf/frontend dialog" | sudo DEBIAN_FRONTEND=noninteractive debconf-communicate
 
-# aaaand go! this container is interactive, contrary to the typical container pattern
 CMD ["bash", "-i"]
