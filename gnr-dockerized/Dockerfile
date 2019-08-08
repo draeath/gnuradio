@@ -17,9 +17,9 @@ RUN echo "set debconf/frontend noninteractive" | DEBIAN_FRONTEND=noninteractive 
     apt-get update &&\
     apt-get dist-upgrade -y &&\
     apt-get install -y --no-install-recommends apt-utils &&\
-    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm &&\
-    apt-get install -y --no-install-recommends python-apt python-pip python-setuptools python-wheel python-mako python-requests python-numpy python-six &&\
-    apt-get install -y --no-install-recommends python3-apt python3-pip python3-setuptools python3-wheel python3-mako python3-requests python3-numpy python3-six &&\
+    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm libxml2 libxml2-dev &&\
+    apt-get install -y --no-install-recommends python-apt python-pip python-setuptools python-wheel python-mako python-requests python-numpy python-six python-lxml &&\
+    apt-get install -y --no-install-recommends python3-apt python3-pip python3-setuptools python3-wheel python3-mako python3-requests python3-numpy python3-six python3-lxml &&\
     echo "daemon-binary = /bin/true" > /etc/pulse/client.conf &&\
     echo "enable-shm = false" >> /etc/pulse/client.conf &&\
     echo "autospawn = no" >> /etc/pulse/client.conf &&\
