@@ -7,7 +7,7 @@ ARG dkuid=1000
 ARG dkgid=1000
 
 # system setup stuff
-RUN groupadd -g $dkgid $dkgroup &&\
+RUN groupadd -g $dkgid $dkgroup || true &&\
     useradd -m -N -G dialout,audio,plugdev -g $dkgid -u $dkuid $dkuser &&\
     mkdir /etc/sudoers.d &&\
     echo "$dkuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/misc &&\
@@ -17,7 +17,9 @@ RUN echo "set debconf/frontend noninteractive" | DEBIAN_FRONTEND=noninteractive 
 RUN apt-get update &&\
     apt-get install -y --no-install-recommends apt-utils &&\
     apt-get dist-upgrade -y &&\
-    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm fonts-dejavu python3-apt python3-pip python3-wheel python3-setuptools python3-ruamel.yaml virtualenv &&\
+    apt-get install -y --no-install-recommends sudo ca-certificates curl dialog git less pulseaudio vim-nox wget xterm \
+        fonts-dejavu python3-apt python3-pip python3-wheel python3-setuptools python3-ruamel.yaml virtualenv \
+        python3-mako python3-gi-cairo python3-yaml gir1.2-gtk-3.0 &&\
     rm -rf /var/lib/apt/lists/*
 RUN echo "daemon-binary = /bin/true" > /etc/pulse/client.conf &&\
     echo "enable-shm = false" >> /etc/pulse/client.conf &&\
